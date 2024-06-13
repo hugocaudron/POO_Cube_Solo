@@ -1,24 +1,30 @@
 <?php
-include 'connectbdd.php';
+include 'connectbdd.php'; // Inclusion du fichier de connexion à la base de données
 
+// Vérification de la méthode de requête pour s'assurer qu'il s'agit d'une requête POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
+    // Récupération de l'identifiant de l'enregistrement à supprimer
+    $id = intval($_POST['id']); // Conversion de l'identifiant en entier pour éviter les injections SQL
 
+    // Préparation de la requête SQL pour supprimer l'enregistrement
     $sql = "DELETE FROM crud WHERE id=$id";
 
+    // Exécution de la requête et vérification de la réussite
     if ($conn->query($sql) === TRUE) {
         echo "Record deleted successfully";
     } else {
         echo "Error deleting record: " . $conn->error;
     }
 
+    // Fermeture de la connexion à la base de données
     $conn->close();
 
-    
-    header('Location: http://localhost/CesiCubeSolo/showUser.php/');         
-    exit();
+    // Redirection vers la page principale après la suppression
+    header('Location: http://localhost/CesiCubeSolo/showUser.php'); // Correction de l'URL de redirection
+    exit(); // Arrête le script après la redirection
 }
 ?>
+
 
 
 <?php

@@ -1,32 +1,45 @@
 <?php
+// Informations de connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "adminconnexioncube";
 
+// Création de la connexion à la base de données
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Vérification de la connexion
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error); // Arrête le script si la connexion échoue
 }
 
+// Vérifie si la méthode de la requête est POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $NOM = $_POST['NOM'];
-  $PRENOM = $_POST['PRENOM'];
-  
-  $sql = "INSERT INTO crud (NOM, PRENOM) VALUES ('$NOM', '$PRENOM')";
-  
-  if ($conn->query($sql) === TRUE) {
-    echo "Nouvelles personne ajouté !";
-    header('Location: http://localhost/POO_Cube_Solo  /showUser.php/');       
+    // Récupération des données du formulaire
+    $NOM = $_POST['NOM'];
+    $PRENOM = $_POST['PRENOM'];
 
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
+    // Préparation de la requête SQL pour éviter les injections SQL
+    $stmt = $conn->prepare("INSERT INTO crud (NOM, PRENOM) VALUES (?, ?)");
+    $stmt->bind_param("ss", $NOM, $PRENOM); // Liaison des paramètres
+
+    // Exécution de la requête et vérification du succès
+    if ($stmt->execute() === TRUE) {
+        echo "Nouvelle personne ajoutée !";
+        header('Location: http://localhost/POO_Cube_Solo/showUser.php'); // Redirection vers une autre page après l'insertion
+        exit(); // Arrête le script après la redirection
+    } else {
+        echo "Error: " . $stmt->error; // Affiche l'erreur si l'insertion échoue
+    }
+
+    // Fermeture de la déclaration préparée
+    $stmt->close();
 }
 
+// Fermeture de la connexion à la base de données
 $conn->close();
 ?>
+
 
 
 <!DOCTYPE html>

@@ -40,7 +40,9 @@ if(isset($_POST['envoi'])){
 
         <br/><br/>
 
-        <input type="submit" name="envoi" value="s'inscrire">
+        <input type="submit" name="envoi" value="s'inscrire"><br>
+        <a href="/POO_Cube_Solo/connexion.php">j'ai déja un compte</a>
+
     </form>
 </body>
 </html>
