@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
   if ($conn->query($sql) === TRUE) {
     echo "Nouvelles personne ajouté !";
-    header('Location: http://localhost/CesiCubeSolo/showUser.php/');       
+    header('Location: http://localhost/POO_Cube_Solo  /showUser.php/');       
 
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;

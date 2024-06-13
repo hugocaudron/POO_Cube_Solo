@@ -13,7 +13,7 @@ if(isset($_POST['Valider'])){
             $_SESSION['pseudo'] = $pseudo;
             $_SESSION['mdp'] = $mdp;
             $_SESSION['id'] = $recupUser->fetch()['id'];
-            header('Location: http://localhost/CesiCubeSolo/showUser.php/');       //si ça existe l'utilisateur est redirigé vers cette page   
+            header('Location: http://localhost/POO_Cube_Solo/showUser.php/');       //si ça existe l'utilisateur est redirigé vers cette page   
         }else {
             echo "Votre mot de passe ou pseudo est incorrect";
         }

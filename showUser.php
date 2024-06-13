@@ -59,7 +59,7 @@ $result = $conn->query($sql);
                     echo "<input type='hidden' name='id' value='" . $row["id"] . "'>";
                     echo "<input type='submit' value='Supprimer'>";
                     echo "</form>";
-                    echo "<form method='get' action='/CesiCubeSolo/modifierUser.php' style='display:inline-block;'>";
+                    echo "<form method='get' action='/POO_Cube_Solo/modifierUser.php' style='display:inline-block;'>";
                     echo "<input type='hidden' name='id' value='" . $row["id"] . "'>";
                     echo "<input type='submit' value='Modifier'>";
                     echo "</form>";
@@ -74,7 +74,9 @@ $result = $conn->query($sql);
         </tbody>
     </table>
 
-    <a href="/CesiCubeSolo/ajouterUser.php">Ajouter un utilisateur</a>
+    <a href="/POO_Cube_Solo/ajouterUser.php">Ajouter un utilisateur</a>
+    <a href="/POO_Cube_Solo/incription.php">Aller à la page d'inscription</a>
+
 </body>
 </html>
 

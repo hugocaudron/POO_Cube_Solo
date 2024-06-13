@@ -14,7 +14,7 @@ if(isset($_POST['envoi'])){
             $_SESSION['pseudo'] = $pseudo;
             $_SESSION['mdp'] = $mdp;
             $_SESSION['id'] = $recupUser->fetch()['id'];
-            header('Location: http://localhost/CesiCubeSolo/connexion.php/');       
+            header('Location: http://localhost/POO_Cube_Solo/connexion.php/');       
 
         }
     }else{
