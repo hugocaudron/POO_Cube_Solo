@@ -1,28 +1,38 @@
 <?php  
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=adminconnexioncube;charset=utf8;','root', '');  //connexion à la base de donnée
-if(isset($_POST['Valider'])){   
-    if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){   //vérifie que c'est pas vide
-        $pseudo = htmlspecialchars($_POST['pseudo']);   //convertit les charactères spéciaux en entités html 
-        $mdp = sha1($_POST['mdp']);  //cripte le mot de passe 
+$bdd = new PDO('mysql:host=localhost;dbname=adminconnexioncube;charset=utf8;', 'root', '');  // Connexion à la base de données
 
-        $recupUser = $bdd->prepare('SELECT * FROM user WHERE pseudo = ? AND mdp = ? ');    //sélectionne l'utilisateur dont le mot de passe correspond à ce fournie
-        $recupUser->execute(array($pseudo, $mdp));  //execute la requête 
+if (isset($_POST['Valider'])) {   
+    if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {   // Vérifie que ce n'est pas vide
+        $pseudo = htmlspecialchars($_POST['pseudo']);   // Convertit les caractères spéciaux en entités HTML 
+        $mdp = sha1($_POST['mdp']);  // Hash le mot de passe 
 
-        if($recupUser->rowCount() > 0){   //vérifie si l'utilisateur existe
-            $_SESSION['pseudo'] = $pseudo;
-            $_SESSION['mdp'] = $mdp;
-            $_SESSION['id'] = $recupUser->fetch()['id'];
-            header('Location: http://localhost/POO_Cube_Solo/showUser.php/');       //si ça existe l'utilisateur est redirigé vers cette page   
-        }else {
+        $recupUser = $bdd->prepare('SELECT * FROM user WHERE pseudo = ? AND mdp = ?');    // Sélectionne l'utilisateur dont le mot de passe correspond à celui fourni
+        $recupUser->execute(array($pseudo, $mdp));  // Exécute la requête 
+
+        if ($recupUser->rowCount() > 0) {   // Vérifie si l'utilisateur existe
+            $user = $recupUser->fetch(); // Récupère les données de l'utilisateur
+            $_SESSION['pseudo'] = $user['pseudo'];
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['Admin'] = $user['Admin'];
+
+            if ($user['Admin'] == 'Administrateur') {
+                header('Location: /POO_Cube_Solo/showUser.php');
+            } else {
+                header('Location: /POO_Cube_Solo/User.php');
+            }
+            exit();
+        } else {
             echo "Votre mot de passe ou pseudo est incorrect";
         }
-    }else{
+    } else {
         echo "Veuillez compléter tous les champs";
     }
 }
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
